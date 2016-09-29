@@ -1,0 +1,13 @@
+{
+	"title"		:	"VendR - Customizable Vending Machines",
+	"type"		:	"tool",
+	"tags"		:	[ "realism", "build" ],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*",
+		"*.git*",
+		"*.md"
+	]
+}
