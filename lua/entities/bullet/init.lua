@@ -2,6 +2,29 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+hook.Add("ShouldCollide","bullet_pen",function(ent1,ent2)
+	--print("called")
+	bull = nil
+	hit = nil
+	if ent1:GetClass()=="bullet" then
+		bull = ent1
+		hit = ent2
+	else
+		bull = ent2
+		hit = ent1
+	end
+	if hit:GetClass() == "func_brush" or hit:GetClass() == "worldspawn" or hit:GetClass() == "player"  then return end
+	if hit:GetClass()~="prop_physics" then return end
+	if bull.dmg < 50 or bull:GetPhysicsObject():GetVelocity():Length() < 10000 or bull:GetPos():Distance(hit:GetPos())>4000 then return end
+	dems = (hit:OBBMaxs()-hit:OBBMins())
+--	if bull:GetPhysicsObject():GetPos():WithinAABox(hit:GetPhysicsObject():GetPos()+hit:OBBMins(),hit:GetPhysicsObject():GetPos()+hit:OBBMaxs()) == false then return end
+	--print(dems,hit)
+	if dems.x < 10 or dems.y < 10 or dems.z < 10  then
+		return false
+	end
+	return
+end)
+
 function ENT:Initialize()
 
 
@@ -11,6 +34,8 @@ function ENT:Initialize()
 	self.Entity:SetSolid( SOLID_VPHYSICS )
 	self.Entity:GetPhysicsObject():SetMass(1)
 	self.Entity:GetPhysicsObject():SetDragCoefficient(10)
+	self:SetCustomCollisionCheck(true)
+	self:CollisionRulesChanged()
 	self.Origin = self:GetPos()
 	util.SpriteTrail(self.Entity,0,Color(255,255,255,150),false,0.5,0,0.6,4 / ( 20 + 0 ) * 0.5,"trails/smoke.vmt")
 	local phys = self.Entity:GetPhysicsObject()

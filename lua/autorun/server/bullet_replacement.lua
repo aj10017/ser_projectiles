@@ -38,6 +38,9 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 			local plasma = ents.Create("bullet")
 			plasma:SetPos(muzzlepos)
 			plasma:SetOwner(self.Owner)
+			cone = (self.Primary.Cone or 0)-0.15
+			print(self.Primary.Cone*1)
+			--if data.Damage > 50 then cone = 0.03 end
 			plasma.dmg = data.Damage/1
 			if data.Num/2 >= 1 then
 				--plasma.dmg = plasma.dmg * 1.4
@@ -56,7 +59,7 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 				plasma:Spawn()
 
 				local phys = plasma:GetPhysicsObject()
-				local VelL = data.Num/3000
+				local VelL = data.Num/3000*(cone*400)
 				--if self.SC == true then phys:ApplyForceCenter((self.Owner:GetAimVector()+Vector(math.Rand(0.03,-0.03),math.Rand(0.03,-0.03),math.Rand(0.03,-0.03))) * 120000 ) end
 				phys:ApplyForceCenter(((self.Owner:GetAimVector())+Vector(math.Rand(VelL,VelL*-1)*data.Num,math.Rand(VelL,VelL*-1)*data.Num,math.Rand(VelL,VelL*-1)*data.Num)) * ((30000*(1+data.Damage/30))/(1+(data.Num*3))) )
 			end
