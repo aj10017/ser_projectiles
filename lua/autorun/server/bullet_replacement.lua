@@ -46,7 +46,7 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 			if self.Primary.Cone~=nil then
 				cone = (self.Primary.Cone or 0)-0.15
 			end
-			print(self.Primary.Cone*1)
+			--print(self.Primary.Cone*1)
 			--if data.Damage > 50 then cone = 0.03 end
 			plasma.dmg = data.Damage/1
 			if data.Num/2 >= 1 then
