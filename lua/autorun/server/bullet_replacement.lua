@@ -1,4 +1,4 @@
-CreateConVar("serproj_enable",1,FCVAR_NOTIFY,"should bullet projectiles be enabled?")
+CreateConVar("serproj_enable",1,bit.band(FCVAR_NOTIFY,FCVAR_SERVER_CAN_EXECUTE),"should bullet projectiles be enabled?")
 hook.Add("InitPostEntity","setvphysicsspeed",function()
 	local tbl = physenv.GetPerformanceSettings()
 	tbl.MaxVelocity = 60500
