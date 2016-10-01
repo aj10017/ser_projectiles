@@ -42,7 +42,10 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 			local plasma = ents.Create("bullet")
 			plasma:SetPos(muzzlepos)
 			plasma:SetOwner(self.Owner)
-			cone = (self.Primary.Cone or 0)-0.15
+			cone = 0
+			if self.Primary.Cone~=nil then
+				cone = (self.Primary.Cone or 0)-0.15
+			end
 			print(self.Primary.Cone*1)
 			--if data.Damage > 50 then cone = 0.03 end
 			plasma.dmg = data.Damage/1
