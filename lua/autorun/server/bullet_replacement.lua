@@ -1,4 +1,4 @@
-
+CreateConVar("serproj_enable",1,FCVAR_NOTIFY,"should bullet projectiles be enabled?")
 hook.Add("InitPostEntity","setvphysicsspeed",function()
 	local tbl = physenv.GetPerformanceSettings()
 	tbl.MaxVelocity = 60500
@@ -10,6 +10,8 @@ end)
 hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 	local fire = nil
 	local override = false
+	if GetConVarNumber("serproj_enable",1)==0 then return end
+
 	if ent:IsPlayer() then
 		if ent:GetActiveWeapon():IsScripted() then
 			if ent:GetActiveWeapon().Base=="fas2_base" then return end
@@ -21,7 +23,7 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 	if ent:IsWeapon() then
 		if ent:IsScripted() then
 			if ent.Base == "fas2_base" then return end
-			if ent.Base == "bobs_scoped_base" or ent.Base == "bobs_gun_base" or (ent.Base~="weapon_sbase" or ent.Base~="fas2_base") then
+			if ent.Base == "bobs_scoped_base" or ent.Base == "bobs_gun_base" or (ent.Base~="weapon_sbase" or ent.Base~="fas2_base" or ent.Base~="cw_base") then
 				fire = ent
 			end
 		end
@@ -31,6 +33,8 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 		override = false
 	end
 	if fire~=nil and override==false then
+		print("calling")
+		if fire.Base=="weapon_sbase" or fire.Base=="fas2_base" or fire.Base=="cw_base" then return end
 		local self = fire
 		local muzzlepos = fire.Owner:GetShootPos() + (fire.Owner:GetForward()*25+fire.Owner:GetRight()*1+fire.Owner:GetUp()*-1)
 		if SERVER then
