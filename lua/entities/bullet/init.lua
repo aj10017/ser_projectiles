@@ -61,7 +61,11 @@ function ENT:PhysicsCollide(data,phy)
 
 	local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
-	dmg:SetInflictor(self.Owner:GetActiveWeapon())
+	if !IsValid(self.Owner:GetActiveWeapon()) then
+		dmg:SetInflictor(self.Owner)
+	else
+		dmg:SetInflictor(self.Owner:GetActiveWeapon())
+	end
 	dmg:SetDamageType(2)
 	dmg:IsExplosionDamage(false)
 	dmg:SetDamage(self.dmg or 10)
