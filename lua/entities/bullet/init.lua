@@ -72,12 +72,9 @@ function ENT:PhysicsCollide(data,phy)
 	if data.HitEntity~=nil and data.HitEntity:GetClass()~="bullet" then
 		data.HitEntity:TakeDamageInfo(dmg)
 		if data.HitEntity:IsPlayer() then
-			if data.HitEntity:Armor() > 0 then
-				self.Owner:SendLua("surface.PlaySound('ui/shield/heavy/hit"..math.random(1,7)..".wav')")
-			else
-				self.Owner:SendLua("surface.PlaySound('sri/hurt.wav')")
+				self.Owner:SendLua("surface.PlaySound('buttons/button16.wav')")
 			end
-			dmg:GetAttacker():SendLua("hitmarker_alpha = 255")
+			--dmg:GetAttacker():SendLua("hitmarker_alpha = 255")
 		end
 	end
 	self:Remove()
