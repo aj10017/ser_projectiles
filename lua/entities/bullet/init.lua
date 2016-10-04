@@ -61,7 +61,7 @@ function ENT:PhysicsCollide(data,phy)
 
 	local dmg = DamageInfo()
 	dmg:SetAttacker(self.Owner)
-	if !IsValid(self.Owner:GetActiveWeapon()) then
+	if IsValid(self.Owner:GetActiveWeapon()) == false then
 		dmg:SetInflictor(self.Owner)
 	else
 		dmg:SetInflictor(self.Owner:GetActiveWeapon())
@@ -72,9 +72,7 @@ function ENT:PhysicsCollide(data,phy)
 	if data.HitEntity~=nil and data.HitEntity:GetClass()~="bullet" then
 		data.HitEntity:TakeDamageInfo(dmg)
 		if data.HitEntity:IsPlayer() then
-				self.Owner:SendLua("surface.PlaySound('buttons/button16.wav')")
-			end
-			--dmg:GetAttacker():SendLua("hitmarker_alpha = 255")
+			self.Owner:SendLua("surface.PlaySound('buttons/button16.wav')")
 		end
 	end
 	self:Remove()
@@ -128,7 +126,7 @@ function ENT:Detonate()
 end
 
 function ENT:Think()
-	if !IsValid(self.Owner) then self:Remove() end
+	if IsValid(self.Owner)==false then self:Remove() end
 
 
 	self.Entity:GetPhysicsObject():ApplyForceCenter((Vector(0,0,0))*1)

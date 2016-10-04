@@ -33,7 +33,7 @@ hook.Add("EntityFireBullets","projectilebullets",function(ent,data)
 		override = false
 	end
 	if fire~=nil and override==false then
-		print("calling")
+		--print("calling")
 		if fire.Base=="weapon_sbase" or fire.Base=="fas2_base" or fire.Base=="cw_base" then return end
 		local self = fire
 		local muzzlepos = fire.Owner:GetShootPos() + (fire.Owner:GetForward()*25+fire.Owner:GetRight()*1+fire.Owner:GetUp()*-1)
